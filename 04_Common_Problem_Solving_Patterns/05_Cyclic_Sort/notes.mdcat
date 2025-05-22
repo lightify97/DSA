@@ -1,0 +1,158 @@
+# Cyclic Sort
+
+## 1. Introduction / Concept
+The Cyclic Sort pattern is an efficient in-place sorting algorithm specifically designed for problems involving arrays that contain numbers in a given fixed range (e.g., `1 to N` or `0 to N-1`). The core idea is to place each number at its correct index in the array.
+
+## 2. Core Principles / Theory
+For an array containing numbers from `1 to N` (or `0 to N-1`), if we were to sort it, the number `i` should ideally be at index `i-1` (or `i`). Cyclic Sort leverages this property.
+
+The algorithm works as follows:
+1.  Iterate through the array using an index `i`.
+2.  At each `i`, check if the number `nums[i]` is at its correct sorted position. For a 1-to-N range, its correct position is `nums[i] - 1`. For a 0-to-N-1 range, its correct position is `nums[i]`.
+3.  If `nums[i]` is not at its correct position, swap `nums[i]` with the number at its correct position (`nums[nums[i]-1]`). This ensures `nums[i]` eventually moves to its sorted place.
+4.  If `nums[i]` *is* at its correct position, or if it's a duplicate that has already been placed by a previous swap (and the number at its correct position is already the target number), simply move to the next index `i+1`.
+5.  Repeat until all elements are in their correct places.
+
+## 3. Operations / Methods
+*   **Iteration:** A single loop to iterate through the array.
+*   **Conditional Swapping:** The core operation, where `nums[i]` is swapped with `nums[correct_index]`.
+
+## 4. Python Implementation Details / Considerations
+*   Python's list indexing and tuple assignment for swapping make the implementation clean.
+*   The `while` loop inside the `for` loop is key to ensuring that the current element `nums[i]` is moved to its correct position before `i` is incremented.
+
+**Example: Cyclic Sort an array with numbers from 1 to N**
+
+```python
+def cyclic_sort(nums):
+    i = 0
+    while i < len(nums):
+        j = nums[i] - 1 # Correct index for the number nums[i] (assuming 1 to N range)
+        if nums[i] != nums[j]:
+            # If the number is not at its correct position, swap it
+            nums[i], nums[j] = nums[j], nums[i]
+        else:
+            # If the number is already at its correct position, or it's a duplicate
+            # that's already in its correct spot, move to the next index
+            i += 1
+    return nums
+
+# Example usage:
+# print(cyclic_sort([3, 1, 5, 4, 2])) # Output: [1, 2, 3, 4, 5]
+# print(cyclic_sort([2, 6, 4, 3, 1, 5])) # Output: [1, 2, 3, 4, 5, 6]
+```
+
+## 5. Time and Space Complexity Analysis
+*   **Time Complexity:** **O(N)**. Although there's a `while` loop nested inside a `for` loop, each number is swapped at most a constant number of times (at most once it's placed in its correct position). This means the total number of swaps is at most `N-1`. So, each element is considered for swapping a constant number of times.
+*   **Space Complexity:** **O(1)** (constant space), as the sorting is done in-place.
+
+## 6. Pros and Cons / Trade-offs
+**Pros:**
+*   **Highly Efficient:** Achieves O(N) time complexity, which is optimal for sorting when numbers are in a specific range.
+*   **In-Place:** Requires O(1) extra space, making it memory-efficient.
+*   **Useful for Variations:** The core sorting mechanism can be adapted to find missing, duplicate, or smallest/largest elements within a range.
+
+**Cons:**
+*   **Limited Applicability:** Only works when the input array contains numbers within a specific range (e.g., `1 to N`, `0 to N-1`). It cannot be used for general sorting.
+*   **Duplicates Handling:** Needs careful consideration if duplicates are present, as the "correct position" might already be occupied by a duplicate.
+
+## 7. Common Use Cases / Applications
+*   **Finding the Missing Number:** (e.g., LeetCode 268. Missing Number).
+*   **Finding the Duplicate Number:** (e.g., LeetCode 287. Find the Duplicate Number).
+*   **Finding All Missing Numbers:** (e.g., LeetCode 448. Find All Numbers Disappeared in an Array).
+*   **Finding All Duplicate Numbers:** (e.g., LeetCode 442. Find All Duplicates in an Array).
+*   **Smallest Missing Positive Number:** (e.g., LeetCode 41. First Missing Positive).
+
+## 8. Related Concepts / Variations
+*   **Bucket Sort / Pigeonhole Sort:** Similar in spirit by placing elements into designated "bins" or positions.
+*   **In-Place Algorithms:** General category of algorithms that modify the input data structure directly without using extra memory.
+
+## 9. LeetCode Problem Examples
+*   [268. Missing Number](https://leetcode.com/problems/missing-number/) (Easy)
+*   [287. Find the Duplicate Number](https://leetcode.com/problems/find-the-duplicate-number/) (Medium)
+*   [448. Find All Numbers Disappeared in an Array](https://leetcode.com/problems/find-all-numbers-disappeared-in-an-array/) (Easy)
+*   [442. Find All Duplicates in an Array](https://leetcode.com/problems/find-all-duplicates-in-an-array/) (Medium)
+*   [41. First Missing Positive](https://leetcode.com/problems/first-missing-positive/) (Hard)
+
+## 10. Further Reading / Resources
+*   [GeeksforGeeks - Cyclic Sort](https://www.geeksforgeeks.org/cyclic-sort/)
+*   [Educative.io - Cyclic Sort Pattern (from Grokking the Coding Interview)](https://www.educative.io/courses/grokking-the-coding-interview/xVlKz9l2Ngj)
+# Cyclic Sort
+
+## 1. Introduction / Concept
+The Cyclic Sort pattern is an efficient in-place sorting algorithm specifically designed for problems involving arrays that contain numbers in a given fixed range (e.g., `1 to N` or `0 to N-1`). The core idea is to place each number at its correct index in the array.
+
+## 2. Core Principles / Theory
+For an array containing numbers from `1 to N` (or `0 to N-1`), if we were to sort it, the number `i` should ideally be at index `i-1` (or `i`). Cyclic Sort leverages this property.
+
+The algorithm works as follows:
+1.  Iterate through the array using an index `i`.
+2.  At each `i`, check if the number `nums[i]` is at its correct sorted position. For a 1-to-N range, its correct position is `nums[i] - 1`. For a 0-to-N-1 range, its correct position is `nums[i]`.
+3.  If `nums[i]` is not at its correct position, swap `nums[i]` with the number at its correct position (`nums[nums[i]-1]`). This ensures `nums[i]` eventually moves to its sorted place.
+4.  If `nums[i]` *is* at its correct position, or if it's a duplicate that has already been placed by a previous swap (and the number at its correct position is already the target number), simply move to the next index `i+1`.
+5.  Repeat until all elements are in their correct places.
+
+## 3. Operations / Methods
+*   **Iteration:** A single loop to iterate through the array.
+*   **Conditional Swapping:** The core operation, where `nums[i]` is swapped with `nums[correct_index]`.
+
+## 4. Python Implementation Details / Considerations
+*   Python's list indexing and tuple assignment for swapping make the implementation clean.
+*   The `while` loop inside the `for` loop is key to ensuring that the current element `nums[i]` is moved to its correct position before `i` is incremented.
+
+**Example: Cyclic Sort an array with numbers from 1 to N**
+
+```python
+def cyclic_sort(nums):
+    i = 0
+    while i < len(nums):
+        j = nums[i] - 1 # Correct index for the number nums[i] (assuming 1 to N range)
+        if nums[i] != nums[j]:
+            # If the number is not at its correct position, swap it
+            nums[i], nums[j] = nums[j], nums[i]
+        else:
+            # If the number is already at its correct position, or it's a duplicate
+            # that's already in its correct spot, move to the next index
+            i += 1
+    return nums
+
+# Example usage:
+# print(cyclic_sort([3, 1, 5, 4, 2])) # Output: [1, 2, 3, 4, 5]
+# print(cyclic_sort([2, 6, 4, 3, 1, 5])) # Output: [1, 2, 3, 4, 5, 6]
+```
+
+## 5. Time and Space Complexity Analysis
+*   **Time Complexity:** **O(N)**. Although there's a `while` loop nested inside a `for` loop, each number is swapped at most a constant number of times (at most once it's placed in its correct position). This means the total number of swaps is at most `N-1`. So, each element is considered for swapping a constant number of times.
+*   **Space Complexity:** **O(1)** (constant space), as the sorting is done in-place.
+
+## 6. Pros and Cons / Trade-offs
+**Pros:**
+*   **Highly Efficient:** Achieves O(N) time complexity, which is optimal for sorting when numbers are in a specific range.
+*   **In-Place:** Requires O(1) extra space, making it memory-efficient.
+*   **Useful for Variations:** The core sorting mechanism can be adapted to find missing, duplicate, or smallest/largest elements within a range.
+
+**Cons:**
+*   **Limited Applicability:** Only works when the input array contains numbers within a specific range (e.g., `1 to N`, `0 to N-1`). It cannot be used for general sorting.
+*   **Duplicates Handling:** Needs careful consideration if duplicates are present, as the "correct position" might already be occupied by a duplicate.
+
+## 7. Common Use Cases / Applications
+*   **Finding the Missing Number:** (e.g., LeetCode 268. Missing Number).
+*   **Finding the Duplicate Number:** (e.g., LeetCode 287. Find the Duplicate Number).
+*   **Finding All Missing Numbers:** (e.g., LeetCode 448. Find All Numbers Disappeared in an Array).
+*   **Finding All Duplicate Numbers:** (e.g., LeetCode 442. Find All Duplicates in an Array).
+*   **Smallest Missing Positive Number:** (e.g., LeetCode 41. First Missing Positive).
+
+## 8. Related Concepts / Variations
+*   **Bucket Sort / Pigeonhole Sort:** Similar in spirit by placing elements into designated "bins" or positions.
+*   **In-Place Algorithms:** General category of algorithms that modify the input data structure directly without using extra memory.
+
+## 9. LeetCode Problem Examples
+*   [268. Missing Number](https://leetcode.com/problems/missing-number/) (Easy)
+*   [287. Find the Duplicate Number](https://leetcode.com/problems/find-the-duplicate-number/) (Medium)
+*   [448. Find All Numbers Disappeared in an Array](https://leetcode.com/problems/find-all-numbers-disappeared-in-an-array/) (Easy)
+*   [442. Find All Duplicates in an Array](https://leetcode.com/problems/find-all-duplicates-in-an-array/) (Medium)
+*   [41. First Missing Positive](https://leetcode.com/problems/first-missing-positive/) (Hard)
+
+## 10. Further Reading / Resources
+*   [GeeksforGeeks - Cyclic Sort](https://www.geeksforgeeks.org/cyclic-sort/)
+*   [Educative.io - Cyclic Sort Pattern (from Grokking the Coding Interview)](https://www.educative.io/courses/grokking-the-coding-interview/xVlKz9l2Ngj)
